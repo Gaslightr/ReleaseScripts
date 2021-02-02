@@ -43,15 +43,15 @@ end)
 
 -- newcclosure breaks Drawing.new apparently
 Esp.Add = function(plr, root, col)
-	if Esp.Container[root] then
-        local Container = Esp.Container[root]
+	if Esp.Container[plr] then
+        local Container = Esp.Container[plr]
         Container.Connection:Disconnect()
 		Container.Name:Remove()
 		Container.Box:Remove()
 		Container.Health:Remove()
 		Container.Distance:Remove()
 		Container.Tracer:Remove()
-		Esp.Container[root] = nil
+		Esp.Container[plr] = nil
 	end
 	local Holder = {
 		Name = Drawing.new("Text"),
@@ -63,7 +63,7 @@ Esp.Add = function(plr, root, col)
 		Root = root,
 		Colour = col
 	}
-	Esp.Container[root] = Holder
+	Esp.Container[plr] = Holder
     Holder.Name.Text = plr.Name
     Holder.Name.Size = Esp.Settings.TextSize
     Holder.Name.Center = true
@@ -110,9 +110,9 @@ Esp.Add = function(plr, root, col)
 	end)
 end
 
-Esp.Remove = newcclosure(function(root)
+Esp.Remove = newcclosure(function(plr)
 	for i, v in next, Esp.Container do
-		if i == root then
+		if i == plr then
 			v.Connection:Disconnect()
 			v.Name:Remove()
 			v.Box:Remove()
@@ -121,7 +121,7 @@ Esp.Remove = newcclosure(function(root)
 			v.Tracer:Remove()
 		end
 	end
-	Esp.Container[root] = nil
+	Esp.Container[plr] = nil
 end)
 
 Esp.TeamCheck = newcclosure(function(plr)
