@@ -135,7 +135,11 @@ if game.PlaceId == 3233893879 then
     end)
 end
 Esp.GetHealth = newcclosure(function(plr)
-	return plr.Character.Humanoid.Health / plr.Character.Humanoid.MaxHealth or 0
+	if plr.Character and plr.Character:FindFirstChild("Humanoid") then
+		return plr.Character.Humanoid.Health / plr.Character.Humanoid.MaxHealth
+	else
+		return 0
+	end
 end) -- can be overwritten for games that don't use default characters
 if game.PlaceId == 292439477 then
     local GetPlayerHealthTable
